@@ -18,7 +18,7 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
-  <TooltipComponent content={title} position="BottomCenter">
+   <TooltipComponent content={title} position="BottomCenter">
     <button
       type="button"
       onClick={() => customFunc()}
@@ -36,7 +36,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 function Navbar() {
 
-  const { activeMenu, setActiveMenu, handleClick, isClicked, screenSize, setScreenSize } = useStateContext();
+  const { activeMenu, setActiveMenu, handleClick, isClicked, screenSize, setScreenSize, currentColor } = useStateContext();
 
   useEffect(() => {
     const handleResize = () => setScreenSize (window.innerWidth);
@@ -62,34 +62,28 @@ function Navbar() {
     <NavButton 
       title="Menu" 
       customFunc={()  => setActiveMenu((prevActiveMenu) => !prevActiveMenu)} 
-      color="blue" 
+      color={currentColor} 
       icon={<AiOutlineMenu />}/>
 
     <div className="flex">
     <NavButton 
       title="Cart" 
       customFunc={()  => handleClick('cart')} 
-      color="blue" 
+      color={currentColor}  
       icon={<FiShoppingCart />}/>
-    </div>
-
-    <div className="flex">
     <NavButton 
       title="Chat" 
       dotColor="#03C9D7"
       customFunc={()  => handleClick('chat')} 
-      color="blue" 
+      color={currentColor} 
       icon={<BsChatLeft />}/>
-    </div>
-
-    <div className="flex">
     <NavButton 
       title="Notifications" 
       dotColor="#03C9D7"
       customFunc={()  => handleClick('notification')} 
-      color="blue" 
+      color={currentColor} 
       icon={<RiNotification3Line />}/>
-    </div>
+    
     <TooltipComponent
       content="Profile"
       position="BottomCenter"
@@ -107,10 +101,11 @@ function Navbar() {
       </div>
     </TooltipComponent>
 
-    {isClicked.cart && (<Cart />)}
-    {isClicked.chat && (<Chat />)}
-    {isClicked.notification && (<Notification />)}
-    {isClicked.userProfile && (<UserProfile />)}
+        {isClicked.cart && (<Cart />)}
+        {isClicked.chat && (<Chat />)}
+        {isClicked.notification && (<Notification />)}
+        {isClicked.userProfile && (<UserProfile />)}
+      </div>
     </div>
   )
 }
